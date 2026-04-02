@@ -32,7 +32,7 @@ const SECURITY_HEADERS: Record<string, string> = {
 // Public paths that don't require SBT identity
 const PUBLIC_PATHS = ['/onboard', '/mint', '/api', '/_next', '/favicon', '/icons']
 
-export function middleware(req: NextRequest) {
+export function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl
 
   // ── V-01: Block CVE-2025-29927 middleware bypass ────────────────────────────
