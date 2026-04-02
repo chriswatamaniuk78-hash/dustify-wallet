@@ -50,6 +50,15 @@ function GameSVG() {
   )
 }
 
+function ScrappiSVG() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+      <rect x="3.5" y="3.5" width="15" height="15" rx="3" stroke="currentColor" strokeWidth="1.3" />
+      <path d="M7 11h8M11 7v8" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+    </svg>
+  )
+}
+
 const SHORTCUTS: AppShortcut[] = [
   {
     id: 'travel',
@@ -74,6 +83,14 @@ const SHORTCUTS: AppShortcut[] = [
     href: 'https://studio.dustify.com',
     accentColor: '#7F77DD',
     icon: <StudioSVG />,
+  },
+  {
+    id: 'scrappi',
+    name: 'SCRAPPI',
+    tagline: 'Sovereign AI command center',
+    href: 'https://code.dustifytechnologiescorp.com',
+    accentColor: '#D4AF37',
+    icon: <ScrappiSVG />,
   },
   {
     id: 'gaming',
@@ -111,6 +128,8 @@ export default function QuickApps() {
           <Link
             key={app.id}
             href={app.href}
+            target={app.href.startsWith('http') ? '_blank' : undefined}
+            rel={app.href.startsWith('http') ? 'noopener noreferrer' : undefined}
             style={{ textDecoration: 'none' }}
           >
             <div
