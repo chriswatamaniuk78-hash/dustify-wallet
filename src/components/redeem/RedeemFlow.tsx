@@ -1,15 +1,3 @@
-
-// Wallet data — loaded from context/API in production. Mock defaults for build.
-const DEFAULT_USER = { name: 'Sovereign Holder', email: '' }
-const DEFAULT_WALLET = {
-  walletAddress: '0xD4AF3789AbCdEf012345678901234567890ABCDE',
-  sbtTokenId: '847',
-  usdcBalance: 0,
-  pointsBalance: 0,
-  rewardsTier: 'PIONEER',
-  isQuantumShielded: true,
-  mintedAt: new Date().toISOString(),
-}
 'use client'
 
 import { useState, useMemo } from 'react'
@@ -22,17 +10,20 @@ import {
   getPointsToNextTier,
   TIER_CONFIGS,
 } from '@/types'
+import type { SoulWallet } from '@/types'
 
 // Wallet defaults — replaced by real data from API/context in production
-const DEFAULT_USER = { name: 'Sovereign Holder', email: '' }
-const DEFAULT_WALLET = {
+const DEFAULT_USER = { id: 'user_local', name: 'Sovereign Holder', email: 'holder@dustify.local', avatarUrl: null, kycLevel: 'EMAIL_VERIFIED', createdAt: new Date().toISOString() }
+const DEFAULT_WALLET: SoulWallet = {
   id: 'sw_local',
+  userId: 'user_local',
   walletAddress: '0xD4AF3789AbCdEf012345678901234567890ABCDE',
   sbtTokenId: '847',
   usdcBalance: 0,
   pointsBalance: 0,
-  rewardsTier: 'PIONEER',
+  rewardsTier: 'SPARK',
   isQuantumShielded: true,
+  tierUpdatedAt: new Date().toISOString(),
   mintedAt: new Date().toISOString(),
 }
 const DEFAULT_TRANSACTIONS: any[] = []

@@ -58,11 +58,20 @@ const CREATORS: Creator[] = [
   },
 ]
 
-export default function InfluencerFeed() {
+interface InfluencerFeedProps {
+  destination?: { city?: string; country?: string; region?: string } | null
+}
+
+export default function InfluencerFeed({ destination }: InfluencerFeedProps) {
   const [selectedCreator, setSelectedCreator] = useState<string|null>(null)
   const [filter, setFilter] = useState<'all'|'canada'>('canada')
 
-  const displayed = CREATORS.filter(c => filter === 'all' || c.canadianCreator)
+  const displayed = CREATORS
+    .filter(c => filter === 'all' || c.canadianCreator)
+    .filter((c) => {
+      if (!destination?.city) return true
+      return c.location.toLowerCase().includes(destination.city.toLowerCase())
+    })
   const active = selectedCreator ? CREATORS.find(c => c.id === selectedCreator) : null
 
   return (
@@ -134,7 +143,7 @@ export default function InfluencerFeed() {
               <div key={post.id} style={{ borderRadius:10, overflow:'hidden', border:'1px solid rgba(255,255,255,0.07)', background:'rgba(8,8,8,0.9)', cursor:'pointer', transition:'all .2s' }}>
                 <div style={{ height:100, background:post.gradient, position:'relative' }}>
                   <div style={{ position:'absolute', inset:0, background:'linear-gradient(to top,rgba(0,0,0,0.6),transparent 60%)' }}/>
-                  <div style={{ position:'absolute', bottom:8, left:10, fontSize:12, fontWeight:600, color:'#fff', position:'relative', zIndex:1, padding:'8px 10px' }}>
+                  <div style={{ position:'absolute', bottom:8, left:10, fontSize:12, fontWeight:600, color:'#fff', zIndex:1, padding:'8px 10px' }}>
                     <div style={{ fontSize:11, fontWeight:600, lineHeight:1.3 }}>{post.title}</div>
                     <div style={{ fontFamily:'monospace', fontSize:8, color:'rgba(255,255,255,0.55)', marginTop:2 }}>📍 {post.location}</div>
                   </div>

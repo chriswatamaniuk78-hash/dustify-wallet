@@ -5,28 +5,33 @@ import StatsRow from '@/components/dashboard/StatsRow'
 import TransactionFeed from '@/components/dashboard/TransactionFeed'
 import BotStatusWidget from '@/components/dashboard/BotStatusWidget'
 import QuickApps from '@/components/dashboard/QuickApps'
-import {
-  DEFAULT_USER,
-  DEFAULT_WALLET,
-  DEFAULT_TRANSACTIONS,
-  DEFAULT_BOT_CONFIG,
-  DEFAULT_BOT_STATS,
-  DEFAULT_POSITIONS,
+import type { SoulWallet, TradingBotConfig, User } from '@/types'
 
 // Wallet defaults — replaced by real data from API/context in production
-const DEFAULT_USER = { name: 'Sovereign Holder', email: '' }
-const DEFAULT_WALLET = {
+const DEFAULT_USER: User = { id: 'user_local', name: 'Sovereign Holder', email: 'holder@dustify.local', avatarUrl: null, kycLevel: 'EMAIL_VERIFIED', createdAt: new Date().toISOString() }
+const DEFAULT_WALLET: SoulWallet = {
   id: 'sw_local',
+  userId: 'user_local',
   walletAddress: '0xD4AF3789AbCdEf012345678901234567890ABCDE',
   sbtTokenId: '847',
   usdcBalance: 0,
   pointsBalance: 0,
-  rewardsTier: 'PIONEER',
+  rewardsTier: 'SPARK',
   isQuantumShielded: true,
+  tierUpdatedAt: new Date().toISOString(),
   mintedAt: new Date().toISOString(),
 }
 const DEFAULT_TRANSACTIONS: any[] = []
-const DEFAULT_BOT_CONFIG = { isEnabled: false, strategy: 'CONSERVATIVE', maxPositionSize: 1000 }
+const DEFAULT_BOT_CONFIG: TradingBotConfig = {
+  isActive: false,
+  riskTolerance: 'CONSERVATIVE',
+  maxPositionSizePct: 10,
+  maxDailyLossPct: 3,
+  assetClasses: ['CRYPTO'],
+  tradingHours: 'CRYPTO_24_7',
+  taxLossHarvestingEnabled: false,
+  optionsEnabled: false,
+}
 const DEFAULT_BOT_STATS = { tradesToday: 0, pnlToday: 0, feesGeneratedToday: 0 }
 const DEFAULT_POSITIONS: any[] = []
 

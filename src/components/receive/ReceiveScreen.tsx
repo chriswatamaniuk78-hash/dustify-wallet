@@ -5,13 +5,13 @@ import { CopyButton, StatusBadge } from '@/components/ui'
 import { formatWalletAddress } from '@/types'
 
 // Wallet data — loaded from context/API in production. Mock defaults for build.
-const DEFAULT_USER = { name: 'Sovereign Holder', email: '' }
+const DEFAULT_USER = { id: 'user_local', name: 'Sovereign Holder', email: 'holder@dustify.local', avatarUrl: null, kycLevel: 'EMAIL_VERIFIED', createdAt: new Date().toISOString() }
 const DEFAULT_WALLET = {
   walletAddress: '0xD4AF3789AbCdEf012345678901234567890ABCDE',
   sbtTokenId: '847',
   usdcBalance: 0,
   pointsBalance: 0,
-  rewardsTier: 'PIONEER',
+  rewardsTier: 'SPARK',
   isQuantumShielded: true,
   mintedAt: new Date().toISOString(),
 }

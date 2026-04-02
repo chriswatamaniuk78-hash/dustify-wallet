@@ -34,7 +34,11 @@ const ACTIVITIES: ActivityItem[] = [
 
 const TYPE_ICONS: Record<ActivityType, string> = { experience:'⭐', hotel:'🏨', restaurant:'🍽', transport:'🚄' }
 
-export default function ActivityFeed() {
+interface ActivityFeedProps {
+  destination?: { city?: string; country?: string; region?: string } | null
+}
+
+export default function ActivityFeed({ destination }: ActivityFeedProps) {
   const [filter, setFilter] = useState<'all' | 'canada' | ActivityType>('all')
   const [hovered, setHovered] = useState<string|null>(null)
 
@@ -51,7 +55,10 @@ export default function ActivityFeed() {
     filter === 'all' ? true :
     filter === 'canada' ? !!a.canadianPick :
     a.type === filter
-  )
+  ).filter((a) => {
+    if (!destination?.city) return true
+    return a.location.toLowerCase().includes(destination.city.toLowerCase())
+  })
 
   return (
     <div>

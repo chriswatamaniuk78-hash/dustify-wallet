@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import '@/styles/globals.css'
+import PwaRegister from '@/components/pwa/PwaRegister'
 
 export const metadata: Metadata = {
   title: {
@@ -39,6 +40,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body>
         <div id="root">
+          <PwaRegister />
           {children}
         </div>
       </body>
