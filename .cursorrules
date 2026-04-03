@@ -1,0 +1,19 @@
+# Dustify — soul-wallet app rules
+# See root .cursorrules for complete platform rules
+# This app is part of the Dustify Technologies Corp platform
+
+## App: soul-wallet
+## Framework: Next.js 14 (App Router) + TypeScript strict + Tailwind
+## Auth: Uses SBT session from packages/security (Gatekeeper middleware)
+## Design: Obsidian Sovereign (pure black + gold, Playfair + Cormorant + JetBrains Mono)
+## Points: All DustMiles awards via 70/30 waterfall engine
+## Security: Intelligence Guard middleware in src/middleware.ts
+
+## NEVER:
+- Use NextAuth (auth is FIDO2/WebAuthn + JWT only)
+- Use any types (strict TypeScript always)
+- Call blockchain directly from components (use packages/contracts)
+- Hardcode API keys (use .env.local always)
+- Use rounded-2xl or higher (max border-radius is 4px in Obsidian Sovereign)
+
+## App URL in production:
