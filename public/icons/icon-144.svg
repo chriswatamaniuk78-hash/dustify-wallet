@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="144" height="144" viewBox="0 0 144 144">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#1a1400"/>
+      <stop offset="100%" stop-color="#000000"/>
+    </radialGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#D4AF37" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#D4AF37" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="144" height="144" fill="url(#bg)" rx="26"/>
+  <!-- Glow -->
+  <ellipse cx="72" cy="58" rx="58" ry="43" fill="url(#glow)"/>
+  <!-- Diamond symbol -->
+  <polygon points="72,26 104,72 72,118 40,72" 
+    fill="none" stroke="#D4AF37" stroke-width="3.6" stroke-linejoin="round"/>
+  <!-- Inner diamond -->
+  <polygon points="72,46 89,72 72,98 55,72" 
+    fill="#D4AF37" opacity="0.9"/>
+  <!-- Dustify label (only for larger icons) -->
+</svg>

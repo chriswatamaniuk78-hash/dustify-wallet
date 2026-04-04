@@ -189,7 +189,7 @@ export default function BotSetupWizard({ onComplete }: { onComplete?: (config: B
                       <input
                         type={apiKeyVisible ? 'text' : 'password'}
                         placeholder={f.placeholder}
-                        value={(config as any)[f.name] || ''}
+                        value={config[f.name as keyof BotConfig] as string || ''}
                         onChange={e => setConfig(c => ({ ...c, [f.name]: e.target.value }))}
                         className="w-full rounded-sm px-4 py-2.5 font-mono text-xs text-white outline-none pr-16"
                         style={{ background: 'rgba(0,0,0,0.6)', border: '1px solid rgba(212,175,55,0.18)' }}
@@ -324,15 +324,15 @@ export default function BotSetupWizard({ onComplete }: { onComplete?: (config: B
                   <div className="flex items-center justify-between mb-2">
                     <label className="font-mono text-[10px] text-white/50">{param.label.toUpperCase()}</label>
                     <span className="font-display text-lg font-bold" style={{ color: param.color }}>
-                      {(config as any)[param.key]}%
+                      {config[param.key as keyof BotConfig]}%
                       <span className="font-mono text-[9px] text-white/30 ml-1">{param.suffix}</span>
                     </span>
                   </div>
                   <input type="range" min={param.min} max={param.max} step={0.5}
-                    value={(config as any)[param.key] || 0}
+                    value={Number(config[param.key as keyof BotConfig]) || 0}
                     onChange={e => setConfig(c => ({ ...c, [param.key]: Number(e.target.value) }))}
                     className="w-full h-1.5 rounded-full appearance-none cursor-pointer"
-                    style={{ accentColor: param.color, background: `linear-gradient(to right, ${param.color} 0%, ${param.color} ${((((config as any)[param.key] - param.min) / (param.max - param.min)) * 100)}%, rgba(255,255,255,0.1) ${((((config as any)[param.key] - param.min) / (param.max - param.min)) * 100)}%, rgba(255,255,255,0.1) 100%)` }}
+                    style={{ accentColor: param.color, background: `linear-gradient(to right, ${param.color} 0%, ${param.color} ${(((Number(config[param.key as keyof BotConfig]) - param.min) / (param.max - param.min)) * 100)}%, rgba(255,255,255,0.1) ${(((Number(config[param.key as keyof BotConfig]) - param.min) / (param.max - param.min)) * 100)}%, rgba(255,255,255,0.1) 100%)` }}
                   />
                 </div>
               ))}

@@ -1,15 +1,3 @@
-
-// Wallet data — loaded from context/API in production. Mock defaults for build.
-const DEFAULT_USER = { name: 'Sovereign Holder', email: '' }
-const DEFAULT_WALLET = {
-  walletAddress: '0xD4AF3789AbCdEf012345678901234567890ABCDE',
-  sbtTokenId: '847',
-  usdcBalance: 0,
-  pointsBalance: 0,
-  rewardsTier: 'PIONEER',
-  isQuantumShielded: true,
-  mintedAt: new Date().toISOString(),
-}
 'use client'
 
 import { useState, useMemo } from 'react'
@@ -22,8 +10,8 @@ import {
   getPointsToNextTier,
   TIER_CONFIGS,
 } from '@/types'
+import type { Transaction, Position } from '@/types'
 
-// Wallet defaults — replaced by real data from API/context in production
 const DEFAULT_USER = { name: 'Sovereign Holder', email: '' }
 const DEFAULT_WALLET = {
   id: 'sw_local',
@@ -35,10 +23,10 @@ const DEFAULT_WALLET = {
   isQuantumShielded: true,
   mintedAt: new Date().toISOString(),
 }
-const DEFAULT_TRANSACTIONS: any[] = []
+const DEFAULT_TRANSACTIONS: Transaction[] = []
 const DEFAULT_BOT_CONFIG = { isEnabled: false, strategy: 'CONSERVATIVE', maxPositionSize: 1000 }
 const DEFAULT_BOT_STATS = { tradesToday: 0, pnlToday: 0, feesGeneratedToday: 0 }
-const DEFAULT_POSITIONS: any[] = []
+const DEFAULT_POSITIONS: Position[] = []
 
 
 const POINTS_PER_USDC = 100

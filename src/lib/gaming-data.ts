@@ -1,332 +1,137 @@
 // ============================================================
-// DUST GAMING — Types & Mock Data
+// DUST GAMING — Complete Data Layer v3
+// Synthesized from: Steam, Apple Arcade, Google Play Games,
+// Roblox, Epic, Discord, Brawl Stars, Fortnite, Xbox GamePass
+// People HATE: Ads, pay-to-win, losing progress, no community
+// People LOVE: No ads, real prizes, achievement ownership, fair play
 // ============================================================
 
-export type GameGenre = 'ACTION' | 'RPG' | 'PUZZLE' | 'STRATEGY' | 'SPORTS' | 'PLATFORMER' | 'HORROR' | 'EDUCATIONAL' | 'SIMULATION'
-export type GamePlatform = 'STEAM' | 'EPIC' | 'IOS' | 'ANDROID' | 'ITCH' | 'DUSTIFY'
-export type AgeRating = 'E' | 'E10' | 'T' | 'M' | 'AO'
-export type TournamentStatus = 'UPCOMING' | 'LIVE' | 'COMPLETED'
-export type CreatorTier = 'EMERGING' | 'RISING' | 'VERIFIED' | 'ELITE'
-
-// ── Game ──────────────────────────────────────────────────────
+export type GameCategory = 'ACTION' | 'PUZZLE' | 'STRATEGY' | 'RPG' | 'RACING' | 'SPORTS' | 'ADVENTURE' | 'KIDS' | 'CARD' | 'SIMULATION'
+export type TournamentStatus = 'LIVE' | 'UPCOMING' | 'COMPLETED'
+export type AchievementRarity = 'COMMON' | 'UNCOMMON' | 'RARE' | 'EPIC' | 'LEGENDARY' | 'MYTHIC'
 
 export interface Game {
-  id: string
-  title: string
-  developer: string
-  developerSbtId: string
-  genre: GameGenre
-  ageRating: AgeRating
-  price: number               // CAD, 0 = free
-  originalPrice?: number
-  platforms: GamePlatform[]
-  rating: number              // 0-10
-  reviewCount: number
-  downloads: number
-  coverColor: string
-  accentColor: string
-  tags: string[]
-  isExclusive: boolean
-  exclusiveDaysLeft?: number
-  hasFreeTrial: boolean
-  hasSBTOwnership: boolean
-  resellable: boolean
-  dustScore: number
-  pointsEarned: number
-  description: string
-  publishedAt: string
+  id: string; title: string; developer: string; category: GameCategory; rating: string
+  description: string; price: number | 'FREE'; dustMilesPerSession: number
+  playerCount: string; releaseDate: string; score: number; reviews: number
+  trending: boolean; featured: boolean; color: string; tags: string[]
+  achievements: number; isKidsSafe: boolean; crossProgress: boolean
+  noAds: boolean; noPay2Win: boolean
 }
-
-// ── Tournament ────────────────────────────────────────────────
 
 export interface Tournament {
-  id: string
-  title: string
-  game: string
-  gameColor: string
-  status: TournamentStatus
-  prizePool: number           // USDC
-  entryFee: number
-  maxPlayers: number
-  currentPlayers: number
-  startDate: string
-  bracket: 'SINGLE_ELIM' | 'DOUBLE_ELIM' | 'ROUND_ROBIN' | 'SWISS'
-  sbtRequired: boolean
-  skillRating?: string        // e.g. "Gold II+"
-  spectators: number
-  createdBy: string
-  createdBySbt: string
+  id: string; title: string; game: string; gameId: string; gameColor: string
+  status: TournamentStatus; prizePool: number; prizeToken: 'USDC' | 'DustMiles'
+  entryFee: number; maxPlayers: number; currentPlayers: number
+  startDate: string; endDate?: string; format: string; region: string
+  dustMilesBonus: number; verified: boolean; spectators: number
+  topPrizes: { place: string; prize: string }[]
 }
 
-// ── Creator ───────────────────────────────────────────────────
-
-export interface Creator {
-  id: string
-  name: string
-  handle: string
-  sbtId: string
-  tier: CreatorTier
-  avatar: string              // initials
-  avatarColor: string
-  gamesPublished: number
-  totalDownloads: number
-  totalRevenue: number
-  followers: number
-  rating: number
-  genres: GameGenre[]
-  topGame: string
-  joinedAt: string
-  verified: boolean
-  streaming: boolean
-  streamViewers?: number
+export interface Achievement {
+  id: string; title: string; description: string; game: string; gameId: string
+  rarity: AchievementRarity; progress: number; earned: boolean; earnedDate?: string
+  dustMilesReward: number; isNFT: boolean; nftValue?: number; icon: string
 }
-
-// ── Achievement SBT ───────────────────────────────────────────
-
-export interface AchievementSBT {
-  id: string
-  title: string
-  description: string
-  game: string
-  rarity: 'COMMON' | 'RARE' | 'EPIC' | 'LEGENDARY' | 'WORLD_FIRST'
-  earnedAt: string
-  icon: string
-  color: string
-  holders: number
-  pointsValue: number
-}
-
-// ── In-game item ──────────────────────────────────────────────
 
 export interface GameItem {
-  id: string
-  name: string
-  game: string
-  type: 'SKIN' | 'WEAPON' | 'CHARACTER' | 'EMOTE' | 'MAP' | 'MOUNT'
-  rarity: 'COMMON' | 'UNCOMMON' | 'RARE' | 'EPIC' | 'LEGENDARY'
-  currentOwner: string
-  price: number
-  originalGame: string
-  crossGameCompatible: boolean
-  mintedAt: string
-  transactionCount: number
-  itemColor: string
+  id: string; name: string; game: string
+  type: 'SKIN' | 'WEAPON' | 'CHARACTER' | 'MAP' | 'EMOTE' | 'NFT'
+  rarity: AchievementRarity; owned: boolean; price: number | null
+  dustMilesValue: number; tradeable: boolean; image: string
 }
 
-// ── Developer analytics ───────────────────────────────────────
-
-export interface DevAnalytics {
-  gameId: string
-  title: string
-  totalRevenue: number
-  revenueToday: number
-  totalPlayers: number
-  dailyActivePlayers: number
-  avgSessionMinutes: number
-  retentionDay1: number
-  retentionDay7: number
-  retentionDay30: number
-  crashRate: number
-  avgRating: number
-  revenueByPlatform: Record<GamePlatform, number>
-  topCountries: { country: string; revenue: number }[]
+export interface LeaderboardEntry {
+  rank: number; playerName: string; sbtId: string; game: string
+  score: number; rating: string; verified: boolean; country: string
+  winRate: number; dustMilesEarned: number; isUser?: boolean
 }
 
-// ── Formatting ─────────────────────────────────────────────────
-
-export function formatRevenue(n: number): string {
-  if (n >= 1_000_000) return `$${(n / 1_000_000).toFixed(1)}M`
-  if (n >= 1_000) return `$${(n / 1_000).toFixed(0)}K`
-  return `$${n}`
+export interface Creator {
+  id: string; name: string; sbtId: string; followers: number; games: number
+  totalPlays: number; revenue: number; rating: number; badge: string; country: string
 }
 
-export function rarityColor(r: string): string {
-  const map: Record<string, string> = {
-    COMMON: '#888780',
-    UNCOMMON: '#1D9E75',
-    RARE: '#378ADD',
-    EPIC: '#7F77DD',
-    LEGENDARY: '#EF9F27',
-    WORLD_FIRST: '#D4AF37',
-  }
-  return map[r] ?? '#888780'
+export interface KidsGame {
+  id: string; title: string; category: string; ageMin: number; ageMax: number
+  description: string; educational: boolean; educationalFocus?: string
+  dustMilesPerSession: number; color: string; icon: string
 }
 
-export function genreIcon(g: GameGenre): string {
-  const map: Record<GameGenre, string> = {
-    ACTION: '⚡', RPG: '◆', PUZZLE: '◎', STRATEGY: '◉',
-    SPORTS: '▲', PLATFORMER: '◐', HORROR: '◇',
-    EDUCATIONAL: '◈', SIMULATION: '◌',
-  }
-  return map[g] ?? '◎'
-}
-
-export function tierColor(t: CreatorTier): string {
-  return { EMERGING: '#888780', RISING: '#1D9E75', VERIFIED: '#378ADD', ELITE: '#D4AF37' }[t]
-}
-
-export function ageRatingColor(r: AgeRating): string {
-  return { E: '#1D9E75', E10: '#639922', T: '#EF9F27', M: '#D85A30', AO: '#E24B4A' }[r]
-}
-
-// ── Mock data ──────────────────────────────────────────────────
-
-export const MOCK_GAMES: Game[] = [
-  {
-    id: 'g1', title: 'Neon Abyss II', developer: 'PixelForge Studio', developerSbtId: '00041',
-    genre: 'ACTION', ageRating: 'T', price: 24.99, platforms: ['STEAM', 'EPIC', 'DUSTIFY'],
-    rating: 9.2, reviewCount: 14_821, downloads: 284_000,
-    coverColor: '#0f1035', accentColor: '#7F77DD',
-    tags: ['Roguelite', 'Action', 'Co-op', 'Pixel art'],
-    isExclusive: false, hasFreeTrial: true, hasSBTOwnership: true, resellable: true,
-    dustScore: 96, pointsEarned: 2499, description: 'Dive into the infinite abyss. Procedurally generated dungeons, 200+ items, and the most satisfying combat in roguelite history.',
-    publishedAt: '2025-09-14',
-  },
-  {
-    id: 'g2', title: 'Terra Kingdoms', developer: 'Sovereign Games', developerSbtId: '00112',
-    genre: 'STRATEGY', ageRating: 'E10', price: 39.99, platforms: ['STEAM', 'DUSTIFY'],
-    rating: 9.5, reviewCount: 8_204, downloads: 124_000,
-    coverColor: '#1a2f1a', accentColor: '#1D9E75',
-    tags: ['4X Strategy', 'City building', 'Multiplayer'],
-    isExclusive: true, exclusiveDaysLeft: 14, hasFreeTrial: true, hasSBTOwnership: true, resellable: true,
-    dustScore: 98, pointsEarned: 3999, description: 'Build civilizations from the ground up. Dustify exclusive for 30 days.',
-    publishedAt: '2026-01-22',
-  },
-  {
-    id: 'g3', title: 'MathQuest Adventures', developer: 'EduPlay Labs', developerSbtId: '00234',
-    genre: 'EDUCATIONAL', ageRating: 'E', price: 0, platforms: ['IOS', 'ANDROID', 'DUSTIFY'],
-    rating: 9.1, reviewCount: 22_140, downloads: 1_240_000,
-    coverColor: '#1a2050', accentColor: '#378ADD',
-    tags: ['Educational', 'Kids', 'Math', 'Free'],
-    isExclusive: false, hasFreeTrial: false, hasSBTOwnership: false, resellable: false,
-    dustScore: 94, pointsEarned: 0, description: 'Make math fun for ages 5-12. Adaptive curriculum, 1,200+ challenges.',
-    publishedAt: '2025-04-10',
-  },
-  {
-    id: 'g4', title: 'Hollow Realms', developer: 'DarkArc Interactive', developerSbtId: '00387',
-    genre: 'RPG', ageRating: 'M', price: 59.99, originalPrice: 79.99, platforms: ['STEAM', 'EPIC', 'DUSTIFY'],
-    rating: 9.7, reviewCount: 31_847, downloads: 520_000,
-    coverColor: '#1a0a0a', accentColor: '#D85A30',
-    tags: ['Open world', 'RPG', 'Dark fantasy', 'Soulslike'],
-    isExclusive: false, hasFreeTrial: true, hasSBTOwnership: true, resellable: true,
-    dustScore: 99, pointsEarned: 5999, description: 'The most acclaimed RPG of 2025. 100+ hours of dark fantasy. Sale: 25% off.',
-    publishedAt: '2025-06-01',
-  },
-  {
-    id: 'g5', title: 'Circuit Breaker', developer: 'NeonByte Labs', developerSbtId: '00521',
-    genre: 'PUZZLE', ageRating: 'E', price: 9.99, platforms: ['IOS', 'ANDROID', 'STEAM', 'DUSTIFY'],
-    rating: 8.9, reviewCount: 7_421, downloads: 890_000,
-    coverColor: '#0a1a1a', accentColor: '#EF9F27',
-    tags: ['Puzzle', 'Casual', 'Relaxing', 'Logic'],
-    isExclusive: false, hasFreeTrial: true, hasSBTOwnership: true, resellable: false,
-    dustScore: 91, pointsEarned: 999, description: 'Wire circuits to power cities. 500 handcrafted puzzles.',
-    publishedAt: '2025-11-30',
-  },
-  {
-    id: 'g6', title: 'Velocity Arena', developer: 'SpeedForce Games', developerSbtId: '00689',
-    genre: 'SPORTS', ageRating: 'E10', price: 19.99, platforms: ['STEAM', 'EPIC', 'DUSTIFY'],
-    rating: 8.7, reviewCount: 9_124, downloads: 210_000,
-    coverColor: '#0a0a2a', accentColor: '#D4AF37',
-    tags: ['Racing', 'Esports', 'Competitive', 'Multiplayer'],
-    isExclusive: false, hasFreeTrial: false, hasSBTOwnership: true, resellable: true,
-    dustScore: 89, pointsEarned: 1999, description: 'The fastest competitive racing game ever made. Real-time 64-player lobbies.',
-    publishedAt: '2025-08-20',
-  },
+// ── Games Catalog ─────────────────────────────────────────────
+export const GAMES_CATALOG: Game[] = [
+  { id: 'hr', title: 'Hollow Realms', developer: 'ShadowForge Studios', category: 'ACTION', rating: '16+', price: 'FREE', description: 'Fast-paced dungeon crawler with SBT-verified competitive ladder. No ads. No pay-to-win. Skill only.', dustMilesPerSession: 25, playerCount: '2.4M', releaseDate: '2024-08-12', score: 91, reviews: 18420, trending: true, featured: true, color: '#7F77DD', tags: ['No Ads', 'No P2W', 'SBT Ranked', 'Co-op'], achievements: 84, isKidsSafe: false, crossProgress: true, noAds: true, noPay2Win: true },
+  { id: 'va', title: 'Velocity Arena', developer: 'NeonEdge', category: 'RACING', rating: '7+', price: 'FREE', description: 'Neon anti-gravity racing. Weekly championships with USDC prize pools. SBT anti-cheat guaranteed.', dustMilesPerSession: 20, playerCount: '1.8M', releaseDate: '2024-11-03', score: 88, reviews: 12840, trending: true, featured: false, color: '#4ade80', tags: ['Racing', 'No Ads', 'USDC Prizes', 'Tournaments'], achievements: 52, isKidsSafe: true, crossProgress: true, noAds: true, noPay2Win: true },
+  { id: 'na', title: 'Neon Abyss II', developer: 'Pixelcat Games', category: 'PUZZLE', rating: '12+', price: 'FREE', description: 'Roguelite puzzle-platformer. Procedurally generated levels. Every run unique.', dustMilesPerSession: 15, playerCount: '980K', releaseDate: '2025-01-20', score: 94, reviews: 8240, trending: false, featured: true, color: '#f472b6', tags: ['Roguelite', 'No Ads', 'Daily Challenges', 'Leaderboards'], achievements: 120, isKidsSafe: false, crossProgress: true, noAds: true, noPay2Win: true },
+  { id: 'tk', title: 'Terra Kingdoms', developer: 'GrandstoneGames', category: 'STRATEGY', rating: '7+', price: 'FREE', description: 'Build your empire, form alliances, compete in seasonal wars. SBT-verified guild membership.', dustMilesPerSession: 30, playerCount: '3.2M', releaseDate: '2023-06-15', score: 86, reviews: 42180, trending: false, featured: false, color: '#E8C547', tags: ['Strategy', 'Guilds', 'Seasonal', 'Alliance Wars'], achievements: 200, isKidsSafe: true, crossProgress: true, noAds: true, noPay2Win: false },
+  { id: 'cb', title: 'Circuit Breaker', developer: 'Binary Pulse', category: 'ACTION', rating: '12+', price: 'FREE', description: 'Cyberpunk twin-stick shooter. 5-minute runs. Global ranking with USDC prizes.', dustMilesPerSession: 18, playerCount: '640K', releaseDate: '2025-02-08', score: 89, reviews: 4920, trending: true, featured: false, color: '#00d4ff', tags: ['Action', 'Quick Runs', 'Competitive', 'Cyber'], achievements: 68, isKidsSafe: false, crossProgress: true, noAds: true, noPay2Win: true },
+  { id: 'fc', title: 'Frost Castle', developer: 'IceBreaker Interactive', category: 'STRATEGY', rating: '7+', price: 'FREE', description: 'Tower defense with deep meta. Weekly challenge runs with DustMiles rewards.', dustMilesPerSession: 12, playerCount: '420K', releaseDate: '2024-09-14', score: 82, reviews: 3180, trending: false, featured: false, color: '#7F77DD', tags: ['Tower Defense', 'Strategy', 'Weekly Challenges'], achievements: 44, isKidsSafe: true, crossProgress: false, noAds: true, noPay2Win: true },
 ]
 
+// ── Kids Zone ─────────────────────────────────────────────────
+export const KIDS_GAMES: KidsGame[] = [
+  { id: 'k1', title: 'StarType Junior', category: 'Typing', ageMin: 5, ageMax: 9, description: 'Learn to type through galaxy adventures!', educational: true, educationalFocus: 'Typing & Keyboard Skills', dustMilesPerSession: 5, color: '#FFD700', icon: '⭐' },
+  { id: 'k2', title: 'NumberNinja', category: 'Math', ageMin: 6, ageMax: 12, description: 'Master arithmetic through ninja combat. Grades 1–6.', educational: true, educationalFocus: 'Mathematics (Grades 1–6)', dustMilesPerSession: 5, color: '#FF6B6B', icon: '🥷' },
+  { id: 'k3', title: 'WorldBuilder', category: 'Creativity', ageMin: 7, ageMax: 14, description: 'Build cities, learn coding basics. No ads, no purchases.', educational: true, educationalFocus: 'Spatial Reasoning & Coding', dustMilesPerSession: 8, color: '#4ECDC4', icon: '🌍' },
+  { id: 'k4', title: 'ArtBot', category: 'Creativity', ageMin: 4, ageMax: 10, description: 'Paint, animate, and share art. AI helps develop unique style.', educational: false, dustMilesPerSession: 5, color: '#FF69B4', icon: '🎨' },
+  { id: 'k5', title: 'SpaceQuest Math', category: 'Math', ageMin: 8, ageMax: 13, description: 'Algebra and geometry through space exploration.', educational: true, educationalFocus: 'Algebra & Geometry', dustMilesPerSession: 6, color: '#6C5CE7', icon: '🚀' },
+  { id: 'k6', title: 'ReadRacer', category: 'Literacy', ageMin: 5, ageMax: 11, description: 'Reading comprehension races. Unlock levels by completing challenges.', educational: true, educationalFocus: 'Reading & Comprehension', dustMilesPerSession: 5, color: '#00B894', icon: '📚' },
+]
+
+// ── Tournaments ───────────────────────────────────────────────
 export const MOCK_TOURNAMENTS: Tournament[] = [
-  {
-    id: 't1', title: 'Velocity Arena World Championship', game: 'Velocity Arena', gameColor: '#D4AF37',
-    status: 'LIVE', prizePool: 25_000, entryFee: 10, maxPlayers: 256, currentPlayers: 247,
-    startDate: '2026-03-30T14:00Z', bracket: 'DOUBLE_ELIM',
-    sbtRequired: true, skillRating: 'Platinum+', spectators: 8_420,
-    createdBy: 'SpeedForce Games', createdBySbt: '00689',
-  },
-  {
-    id: 't2', title: 'Hollow Realms PvP Invitational', game: 'Hollow Realms', gameColor: '#D85A30',
-    status: 'UPCOMING', prizePool: 10_000, entryFee: 5, maxPlayers: 128, currentPlayers: 94,
-    startDate: '2026-04-06T18:00Z', bracket: 'SINGLE_ELIM',
-    sbtRequired: true, skillRating: 'Gold+', spectators: 0,
-    createdBy: 'DarkArc Interactive', createdBySbt: '00387',
-  },
-  {
-    id: 't3', title: 'Neon Abyss Speed Run Open', game: 'Neon Abyss II', gameColor: '#7F77DD',
-    status: 'UPCOMING', prizePool: 5_000, entryFee: 0, maxPlayers: 512, currentPlayers: 341,
-    startDate: '2026-04-13T16:00Z', bracket: 'SWISS',
-    sbtRequired: true, skillRating: undefined, spectators: 0,
-    createdBy: 'Community Organizer', createdBySbt: '01247',
-  },
-  {
-    id: 't4', title: 'Terra Kingdoms Season 1 Finals', game: 'Terra Kingdoms', gameColor: '#1D9E75',
-    status: 'COMPLETED', prizePool: 15_000, entryFee: 20, maxPlayers: 64, currentPlayers: 64,
-    startDate: '2026-03-15T15:00Z', bracket: 'ROUND_ROBIN',
-    sbtRequired: true, skillRating: 'Diamond+', spectators: 3_847,
-    createdBy: 'Sovereign Games', createdBySbt: '00112',
-  },
+  { id: 't1', title: 'Hollow Realms Grand Prix', game: 'Hollow Realms', gameId: 'hr', gameColor: '#7F77DD', status: 'LIVE', prizePool: 5000, prizeToken: 'USDC', entryFee: 0, maxPlayers: 512, currentPlayers: 441, startDate: '2025-04-04T12:00:00Z', endDate: '2025-04-04T22:00:00Z', format: 'Single Elimination', region: 'Global', dustMilesBonus: 500, verified: true, spectators: 8420, topPrizes: [{ place: '1st', prize: '$1,500 USDC' }, { place: '2nd', prize: '$750 USDC' }, { place: '3rd', prize: '$350 USDC' }] },
+  { id: 't2', title: 'Velocity Arena Championship', game: 'Velocity Arena', gameId: 'va', gameColor: '#4ade80', status: 'UPCOMING', prizePool: 2500, prizeToken: 'USDC', entryFee: 5, maxPlayers: 256, currentPlayers: 189, startDate: '2025-04-06T18:00:00Z', format: 'Swiss + Top 16 Bracket', region: 'North America', dustMilesBonus: 250, verified: true, spectators: 0, topPrizes: [{ place: '1st', prize: '$800 USDC' }, { place: '2nd', prize: '$400 USDC' }, { place: '3–4th', prize: '$200 USDC' }] },
+  { id: 't3', title: 'Neon Abyss Speed Run', game: 'Neon Abyss II', gameId: 'na', gameColor: '#f472b6', status: 'UPCOMING', prizePool: 1000, prizeToken: 'DustMiles', entryFee: 0, maxPlayers: 1000, currentPlayers: 724, startDate: '2025-04-08T20:00:00Z', format: 'Time Trial · Best of 3', region: 'Global', dustMilesBonus: 1000, verified: true, spectators: 0, topPrizes: [{ place: '1st', prize: '50,000 DustMiles ($500)' }, { place: '2nd', prize: '25,000 DustMiles' }, { place: '3–10th', prize: '5,000 DustMiles' }] },
+  { id: 't4', title: 'Terra Kingdoms Guild Wars', game: 'Terra Kingdoms', gameId: 'tk', gameColor: '#E8C547', status: 'COMPLETED', prizePool: 10000, prizeToken: 'USDC', entryFee: 0, maxPlayers: 32, currentPlayers: 32, startDate: '2025-03-28T16:00:00Z', endDate: '2025-03-30T22:00:00Z', format: 'Guild Battle · Round Robin', region: 'Global', dustMilesBonus: 1500, verified: true, spectators: 12840, topPrizes: [{ place: 'Winner Guild', prize: '$4,000 USDC' }, { place: '2nd Guild', prize: '$2,000 USDC' }, { place: '3rd Guild', prize: '$1,000 USDC' }] },
 ]
 
-export const MOCK_CREATORS: Creator[] = [
-  { id: 'c1', name: 'PixelForge Studio', handle: 'pixelforge', sbtId: '00041', tier: 'ELITE', avatar: 'PF', avatarColor: '#7F77DD', gamesPublished: 8, totalDownloads: 2_840_000, totalRevenue: 4_200_000, followers: 84_200, rating: 9.4, genres: ['ACTION', 'RPG', 'PLATFORMER'], topGame: 'Neon Abyss II', joinedAt: '2024-01-15', verified: true, streaming: true, streamViewers: 1_247 },
-  { id: 'c2', name: 'Sovereign Games', handle: 'sovereigngames', sbtId: '00112', tier: 'ELITE', avatar: 'SG', avatarColor: '#1D9E75', gamesPublished: 4, totalDownloads: 840_000, totalRevenue: 2_100_000, followers: 41_800, rating: 9.6, genres: ['STRATEGY', 'SIMULATION'], topGame: 'Terra Kingdoms', joinedAt: '2024-03-22', verified: true, streaming: false },
-  { id: 'c3', name: 'EduPlay Labs', handle: 'eduplay', sbtId: '00234', tier: 'VERIFIED', avatar: 'EP', avatarColor: '#378ADD', gamesPublished: 12, totalDownloads: 4_200_000, totalRevenue: 840_000, followers: 124_000, rating: 9.1, genres: ['EDUCATIONAL'], topGame: 'MathQuest Adventures', joinedAt: '2024-02-08', verified: true, streaming: false },
-  { id: 'c4', name: 'DarkArc Interactive', handle: 'darkarc', sbtId: '00387', tier: 'ELITE', avatar: 'DA', avatarColor: '#D85A30', gamesPublished: 3, totalDownloads: 1_240_000, totalRevenue: 5_800_000, followers: 218_000, rating: 9.8, genres: ['RPG', 'ACTION', 'HORROR'], topGame: 'Hollow Realms', joinedAt: '2023-11-14', verified: true, streaming: true, streamViewers: 4_821 },
-  { id: 'c5', name: 'NeonByte Labs', handle: 'neonbyte', sbtId: '00521', tier: 'RISING', avatar: 'NB', avatarColor: '#EF9F27', gamesPublished: 5, totalDownloads: 1_200_000, totalRevenue: 420_000, followers: 18_400, rating: 8.9, genres: ['PUZZLE', 'CASUAL'], topGame: 'Circuit Breaker', joinedAt: '2024-06-30', verified: false, streaming: false },
+// ── Achievements ──────────────────────────────────────────────
+export const MOCK_ACHIEVEMENTS: Achievement[] = [
+  { id: 'a1', title: 'The Abyss Starer', description: 'Complete 100 runs of Neon Abyss II without dying on Floor 10', game: 'Neon Abyss II', gameId: 'na', rarity: 'LEGENDARY', progress: 100, earned: true, earnedDate: '2025-03-18', dustMilesReward: 500, isNFT: true, nftValue: 28, icon: '👁' },
+  { id: 'a2', title: 'Speed Demon', description: 'Win a Velocity Arena match in under 4 minutes', game: 'Velocity Arena', gameId: 'va', rarity: 'EPIC', progress: 100, earned: true, earnedDate: '2025-03-22', dustMilesReward: 250, isNFT: true, nftValue: 12, icon: '⚡' },
+  { id: 'a3', title: 'Grand Architect', description: 'Build a city with 1M+ population in Terra Kingdoms', game: 'Terra Kingdoms', gameId: 'tk', rarity: 'RARE', progress: 82, earned: false, dustMilesReward: 100, isNFT: false, icon: '🏗' },
+  { id: 'a4', title: 'Circuit Master', description: 'Win 50 consecutive matches in Circuit Breaker', game: 'Circuit Breaker', gameId: 'cb', rarity: 'MYTHIC', progress: 34, earned: false, dustMilesReward: 2000, isNFT: true, nftValue: 120, icon: '🔮' },
+  { id: 'a5', title: 'Dungeon Legend', description: 'Clear all 100 floors of Hollow Realms solo', game: 'Hollow Realms', gameId: 'hr', rarity: 'LEGENDARY', progress: 67, earned: false, dustMilesReward: 1000, isNFT: true, nftValue: 65, icon: '⚔' },
+  { id: 'a6', title: 'First Victory', description: 'Win your first competitive match', game: 'Velocity Arena', gameId: 'va', rarity: 'COMMON', progress: 100, earned: true, earnedDate: '2025-02-14', dustMilesReward: 25, isNFT: false, icon: '🏆' },
 ]
 
-export const MOCK_ACHIEVEMENTS: AchievementSBT[] = [
-  { id: 'ach1', title: 'World First Clear', description: 'First player globally to complete the True Ending of Hollow Realms on Nightmare difficulty', game: 'Hollow Realms', rarity: 'WORLD_FIRST', earnedAt: '2026-01-04T03:47Z', icon: '◆', color: '#D4AF37', holders: 1, pointsValue: 100_000 },
-  { id: 'ach2', title: 'Velocity Champion', description: 'Won the Velocity Arena Season 1 World Championship', game: 'Velocity Arena', rarity: 'LEGENDARY', earnedAt: '2026-02-18', icon: '◉', color: '#EF9F27', holders: 1, pointsValue: 50_000 },
-  { id: 'ach3', title: 'Abyss Diver', description: 'Reached floor 100 in Neon Abyss II without taking damage', game: 'Neon Abyss II', rarity: 'EPIC', earnedAt: '2025-12-21', icon: '◎', color: '#7F77DD', holders: 47, pointsValue: 10_000 },
-  { id: 'ach4', title: 'Mastermind', description: 'Completed all 500 Circuit Breaker puzzles', game: 'Circuit Breaker', rarity: 'RARE', earnedAt: '2026-01-15', icon: '◈', color: '#378ADD', holders: 892, pointsValue: 2_500 },
-]
-
+// ── Game Items ─────────────────────────────────────────────────
 export const MOCK_GAME_ITEMS: GameItem[] = [
-  { id: 'i1', name: 'Abyss Dragon Skin', game: 'Neon Abyss II', type: 'SKIN', rarity: 'LEGENDARY', currentOwner: '#00847', price: 180, originalGame: 'Neon Abyss II', crossGameCompatible: true, mintedAt: '2025-10-14', transactionCount: 4, itemColor: '#7F77DD' },
-  { id: 'i2', name: 'Champion\'s Helm', game: 'Hollow Realms', type: 'CHARACTER', rarity: 'EPIC', currentOwner: '#01204', price: 85, originalGame: 'Hollow Realms', crossGameCompatible: false, mintedAt: '2025-11-28', transactionCount: 2, itemColor: '#D85A30' },
-  { id: 'i3', name: 'Speed Demon Mount', game: 'Velocity Arena', type: 'MOUNT', rarity: 'RARE', currentOwner: '#00312', price: 42, originalGame: 'Velocity Arena', crossGameCompatible: true, mintedAt: '2026-01-08', transactionCount: 1, itemColor: '#D4AF37' },
-  { id: 'i4', name: 'Kingdom Banner', game: 'Terra Kingdoms', type: 'EMOTE', rarity: 'UNCOMMON', currentOwner: '#00541', price: 12, originalGame: 'Terra Kingdoms', crossGameCompatible: false, mintedAt: '2026-02-14', transactionCount: 3, itemColor: '#1D9E75' },
+  { id: 'gi1', name: 'Quantum Blade Skin', game: 'Hollow Realms', type: 'WEAPON', rarity: 'LEGENDARY', owned: true, price: null, dustMilesValue: 2400, tradeable: true, image: 'quantum-blade' },
+  { id: 'gi2', name: 'Neon Racer #247', game: 'Velocity Arena', type: 'NFT', rarity: 'EPIC', owned: true, price: null, dustMilesValue: 1200, tradeable: true, image: 'neon-racer' },
+  { id: 'gi3', name: 'Shadow Cloak', game: 'Hollow Realms', type: 'SKIN', rarity: 'RARE', owned: true, price: null, dustMilesValue: 400, tradeable: false, image: 'shadow-cloak' },
+  { id: 'gi4', name: 'Grand Architect Token', game: 'Terra Kingdoms', type: 'NFT', rarity: 'MYTHIC', owned: false, price: 8500, dustMilesValue: 8500, tradeable: true, image: 'architect' },
 ]
 
-export const MOCK_DEV_ANALYTICS: DevAnalytics = {
-  gameId: 'g1', title: 'Neon Abyss II',
-  totalRevenue: 4_200_000, revenueToday: 8_420,
-  totalPlayers: 284_000, dailyActivePlayers: 42_847,
-  avgSessionMinutes: 47, retentionDay1: 72, retentionDay7: 48, retentionDay30: 31,
-  crashRate: 0.12, avgRating: 9.2,
-  revenueByPlatform: { STEAM: 2_100_000, EPIC: 840_000, IOS: 0, ANDROID: 0, ITCH: 210_000, DUSTIFY: 1_050_000 },
-  topCountries: [
-    { country: 'United States', revenue: 1_260_000 },
-    { country: 'Canada', revenue: 630_000 },
-    { country: 'United Kingdom', revenue: 420_000 },
-    { country: 'Germany', revenue: 336_000 },
-    { country: 'Japan', revenue: 252_000 },
-  ],
-}
+// ── Leaderboards ──────────────────────────────────────────────
+export const GLOBAL_LEADERBOARD: LeaderboardEntry[] = [
+  { rank: 1, playerName: 'ShadowBlade_9', sbtId: '00041', game: 'Hollow Realms', score: 9_847_320, rating: 'Grandmaster', verified: true, country: '🇨🇦', winRate: 84, dustMilesEarned: 124_800 },
+  { rank: 2, playerName: 'QuantumRacer', sbtId: '00112', game: 'Velocity Arena', score: 8_204_110, rating: 'Master', verified: true, country: '🇺🇸', winRate: 79, dustMilesEarned: 98_400 },
+  { rank: 3, playerName: 'AbyssDelver', sbtId: '00234', game: 'Neon Abyss II', score: 7_841_000, rating: 'Grandmaster', verified: true, country: '🇬🇧', winRate: 91, dustMilesEarned: 87_200 },
+  { rank: 4, playerName: 'TerraLord', sbtId: '00387', game: 'Terra Kingdoms', score: 6_920_400, rating: 'Diamond I', verified: false, country: '🇩🇪', winRate: 72, dustMilesEarned: 62_400 },
+  { rank: 5, playerName: 'CircuitMind', sbtId: '00521', game: 'Circuit Breaker', score: 5_847_230, rating: 'Diamond II', verified: true, country: '🇯🇵', winRate: 78, dustMilesEarned: 48_100 },
+  { rank: 6, playerName: 'PixelStrike', sbtId: '00689', game: 'Neon Abyss II', score: 4_921_870, rating: 'Diamond I', verified: false, country: '🇨🇦', winRate: 69, dustMilesEarned: 38_200 },
+  { rank: 7, playerName: 'NeonGhost (You)', sbtId: '00847', game: 'Velocity Arena', score: 3_847_120, rating: 'Platinum I', verified: true, country: '🇨🇦', winRate: 64, dustMilesEarned: 28_400, isUser: true },
+]
 
-// ── Kids Zone parent config ────────────────────────────────────
+// ── Creators ──────────────────────────────────────────────────
+export const MOCK_CREATORS: Creator[] = [
+  { id: 'c1', name: 'PixelForge', sbtId: '00041', followers: 128_400, games: 12, totalPlays: 4_820_000, revenue: 48_200, rating: 4.94, badge: 'Verified Creator', country: '🇨🇦' },
+  { id: 'c2', name: 'NeonStudios', sbtId: '00289', followers: 84_200, games: 8, totalPlays: 2_140_000, revenue: 28_400, rating: 4.88, badge: 'Top Creator', country: '🇺🇸' },
+  { id: 'c3', name: 'BinaryDreams', sbtId: '00521', followers: 42_100, games: 5, totalPlays: 980_000, revenue: 14_200, rating: 4.82, badge: 'Rising Star', country: '🇬🇧' },
+]
 
-export interface ChildProfile {
-  name: string
-  sbtId: string
-  age: number
-  ageGroup: '5-8' | '9-12' | '13-17'
-  dailyLimitMinutes: number
-  spendingCapCAD: number
-  allowedGenres: GameGenre[]
-  friendsRequireApproval: boolean
-  minutesPlayedToday: number
-  pointsBalance: number
-}
+export const MOCK_DEV_ANALYTICS = { totalPlays: 48_240, revenue: 2_412, dustMilesGenerated: 48_240, avgSession: '14m 32s', retention: '42%', rating: 4.7, topCountries: [{ country: '🇺🇸 USA', pct: 34 }, { country: '🇨🇦 Canada', pct: 28 }, { country: '🇬🇧 UK', pct: 18 }, { country: '🇯🇵 Japan', pct: 11 }] }
 
-export const MOCK_CHILD_PROFILE: ChildProfile = {
-  name: 'Jordan',
-  sbtId: '01847',
-  age: 9,
-  ageGroup: '9-12',
-  dailyLimitMinutes: 120,
-  spendingCapCAD: 20,
-  allowedGenres: ['EDUCATIONAL', 'PUZZLE', 'PLATFORMER', 'SPORTS'],
-  friendsRequireApproval: true,
-  minutesPlayedToday: 67,
-  pointsBalance: 12_480,
+// ── Utility ────────────────────────────────────────────────────
+export function rarityColor(rarity: AchievementRarity): string {
+  const map: Record<AchievementRarity, string> = { COMMON: '#9ca3af', UNCOMMON: '#4ade80', RARE: '#60a5fa', EPIC: '#a78bfa', LEGENDARY: '#D4AF37', MYTHIC: '#f472b6' }
+  return map[rarity]
 }
+export function rarityGlow(rarity: AchievementRarity): string { return `0 0 12px ${rarityColor(rarity)}60` }
+export function tierColor(tier: string): string {
+  const map: Record<string, string> = { 'Grandmaster': '#f472b6', 'Master': '#a78bfa', 'Diamond I': '#60a5fa', 'Diamond II': '#60a5fa', 'Platinum I': '#4ade80', 'Gold I': '#D4AF37' }
+  return map[tier] ?? '#9ca3af'
+}
+export function formatRevenue(n: number): string { return n >= 1000 ? `$${(n / 1000).toFixed(1)}K` : `$${n}` }

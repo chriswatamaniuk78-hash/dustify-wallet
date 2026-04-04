@@ -91,7 +91,7 @@ export default function NotificationsPage() {
           { id: 'unread', label: `Unread (${unread})` },
           { id: 'urgent', label: `Urgent (${urgent})` },
         ].map(f => (
-          <button key={f.id} onClick={() => setFilter(f.id as any)}
+          <button key={f.id} onClick={() => setFilter(f.id as 'all' | 'unread' | 'urgent')}
             className="flex-1 py-2 rounded-sm font-mono text-[10px] tracking-widest transition-all"
             style={{
               background: filter === f.id ? 'rgba(212,175,55,0.1)' : 'transparent',

@@ -295,7 +295,7 @@ export function MilesDashboard() {
       {/* Tabs */}
       <div className="flex gap-1 mb-5" style={{ background: 'rgba(255,255,255,0.02)', borderRadius: '4px', padding: '4px' }}>
         {['overview','history','redeem'].map(t => (
-          <button key={t} onClick={() => setTab(t as any)}
+          <button key={t} onClick={() => setTab(t as 'overview' | 'history' | 'redeem')}
             className="flex-1 py-2 font-mono text-[10px] tracking-widest rounded-sm transition-all capitalize"
             style={{
               background: tab === t ? 'rgba(212,175,55,0.1)' : 'transparent',

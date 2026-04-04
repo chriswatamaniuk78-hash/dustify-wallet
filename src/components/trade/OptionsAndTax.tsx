@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { StatusBadge, Spinner } from '@/components/ui'
+import type { OptionsStrategy } from '@/lib/trade-data'
 import {
   MOCK_OPTIONS_POSITIONS,
   MOCK_TAX_LOSS_ITEMS,
@@ -269,7 +270,7 @@ export function OptionsPanel() {
                 }}
               >
                 <div style={{ fontSize: 13, fontWeight: 500, marginBottom: 4 }}>
-                  {strategyLabel(key as any)}
+                  {strategyLabel(key as OptionsStrategy)}
                 </div>
                 <div style={{ fontSize: 11, color: 'var(--text-tertiary)', lineHeight: 1.5 }}>
                   {desc.split('.')[0]}.

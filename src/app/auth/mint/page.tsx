@@ -5,7 +5,7 @@
 // ============================================================
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Fingerprint, Loader2, CheckCircle, ExternalLink } from 'lucide-react'
+import { Fingerprint, Loader2, CheckCircle } from 'lucide-react'
 
 type MintStep = 'wallet' | 'passkey' | 'mint' | 'success'
 
@@ -18,7 +18,15 @@ export default function MintSBTPage() {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
-  const TIER_CONFIG = {
+  interface MintTierInfo {
+    color: string
+    label: string
+    price: string
+    icon: string
+    perks: string[]
+  }
+
+  const TIER_CONFIG: Record<string, MintTierInfo> = {
     PIONEER:   { color: '#60a5fa', label: 'Pioneer',   price: 'FREE',   icon: '◇', perks: ['Access to Soul Wallet', 'DustMiles rewards', 'Basic trading', 'Travel booking'] },
     SOVEREIGN: { color: '#D4AF37', label: 'Sovereign',  price: '$49 USDC', icon: '◈', perks: ['Everything in Pioneer', '2× DustMiles rate', 'Advanced trading bots', 'LUMIS access'] },
     ARCHITECT: { color: '#f472b6', label: 'Architect',  price: '$149 USDC', icon: '◆', perks: ['Everything in Sovereign', '5× DustMiles rate', 'Dust Code ZK circuits', 'Office Boss access', 'Priority Phoenix recovery'] },
@@ -101,7 +109,7 @@ export default function MintSBTPage() {
               <div className="mb-5">
                 <div className="font-mono text-[10px] tracking-widest text-[#7a5c1e] mb-3">YOUR TIER</div>
                 <div className="space-y-2">
-                  {(Object.entries(TIER_CONFIG) as any[]).map(([t, cfg]) => (
+                  {Object.entries(TIER_CONFIG).map(([t, cfg]) => (
                     <div key={t} className="rounded-sm p-3"
                       style={{ background: t === tier ? `${cfg.color}10` : 'rgba(255,255,255,0.02)', border: `1px solid ${t === tier ? cfg.color + '30' : 'rgba(255,255,255,0.08)'}` }}>
                       <div className="flex items-center justify-between">

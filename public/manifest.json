@@ -1,129 +1,53 @@
 {
   "name": "Soul Wallet — Dustify Technologies",
   "short_name": "Soul Wallet",
-  "description": "Your quantum-secured sovereign identity, wealth, and lifestyle platform. Travel. Trade. Create. Earn.",
-  "start_url": "/",
+  "description": "Quantum-secured identity wallet with autonomous trading, travel booking, gaming rewards, and DustMiles. Canada's most advanced crypto super-app.",
+  "start_url": "/dashboard",
   "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
   "background_color": "#000000",
   "theme_color": "#D4AF37",
   "orientation": "portrait-primary",
   "scope": "/",
   "lang": "en-CA",
-  "categories": ["finance", "lifestyle", "utilities"],
+  "dir": "ltr",
+  "categories": ["finance", "productivity", "utilities", "travel"],
   "iarc_rating_id": "e84b072d-71b3-4d3e-86ae-31a8ce4e53b7",
   "icons": [
-    {
-      "src": "/icons/icon-72.png",
-      "sizes": "72x72",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/icons/icon-96.png",
-      "sizes": "96x96",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/icons/icon-128.png",
-      "sizes": "128x128",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/icons/icon-144.png",
-      "sizes": "144x144",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/icons/icon-152.png",
-      "sizes": "152x152",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/icons/icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/icons/icon-384.png",
-      "sizes": "384x384",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/icons/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
-    }
+    { "src": "/icons/icon-72.png",  "sizes": "72x72",   "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-96.png",  "sizes": "96x96",   "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-128.png", "sizes": "128x128", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-144.png", "sizes": "144x144", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-152.png", "sizes": "152x152", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/icons/icon-384.png", "sizes": "384x384", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
   ],
   "screenshots": [
-    {
-      "src": "/screenshots/dashboard.png",
-      "sizes": "390x844",
-      "type": "image/png",
-      "form_factor": "narrow",
-      "label": "Soul Wallet Dashboard"
-    },
-    {
-      "src": "/screenshots/trade.png",
-      "sizes": "390x844",
-      "type": "image/png",
-      "form_factor": "narrow",
-      "label": "Autonomous Trading Bot"
-    },
-    {
-      "src": "/screenshots/travel.png",
-      "sizes": "390x844",
-      "type": "image/png",
-      "form_factor": "narrow",
-      "label": "Dust Travel"
-    }
+    { "src": "/screenshots/dashboard.png", "sizes": "390x844", "type": "image/png", "form_factor": "narrow", "label": "Soul Wallet Dashboard" },
+    { "src": "/screenshots/trade.png",     "sizes": "390x844", "type": "image/png", "form_factor": "narrow", "label": "Autonomous Trading Bot + Phantom Flow" },
+    { "src": "/screenshots/travel.png",    "sizes": "390x844", "type": "image/png", "form_factor": "narrow", "label": "Dust Travel — No hidden fees" },
+    { "src": "/screenshots/gaming.png",    "sizes": "390x844", "type": "image/png", "form_factor": "narrow", "label": "Dust Gaming — Real USDC prizes" },
+    { "src": "/screenshots/miles.png",     "sizes": "390x844", "type": "image/png", "form_factor": "narrow", "label": "DustMiles Rewards Waterfall" }
   ],
   "shortcuts": [
-    {
-      "name": "Send USDC",
-      "short_name": "Send",
-      "description": "Send USDC to any wallet",
-      "url": "/send",
-      "icons": [{ "src": "/icons/icon-96.png", "sizes": "96x96" }]
-    },
-    {
-      "name": "Book a Flight",
-      "short_name": "Travel",
-      "description": "Search and book flights with DustMiles",
-      "url": "/travel",
-      "icons": [{ "src": "/icons/icon-96.png", "sizes": "96x96" }]
-    },
-    {
-      "name": "Trading Bots",
-      "short_name": "Trade",
-      "description": "Monitor your autonomous trading bots",
-      "url": "/trade",
-      "icons": [{ "src": "/icons/icon-96.png", "sizes": "96x96" }]
-    },
-    {
-      "name": "DustMiles",
-      "short_name": "Miles",
-      "description": "Check and redeem your DustMiles",
-      "url": "/miles",
-      "icons": [{ "src": "/icons/icon-96.png", "sizes": "96x96" }]
-    }
+    { "name": "Dashboard",   "short_name": "Home",    "url": "/dashboard",    "description": "Soul Wallet balance and activity",   "icons": [{ "src": "/icons/icon-96.png", "sizes": "96x96" }] },
+    { "name": "Send USDC",   "short_name": "Send",    "url": "/send",         "description": "Send USDC to any wallet",            "icons": [{ "src": "/icons/icon-96.png", "sizes": "96x96" }] },
+    { "name": "Trade Bot",   "short_name": "Trade",   "url": "/trade",        "description": "Monitor autonomous trading bot",     "icons": [{ "src": "/icons/icon-96.png", "sizes": "96x96" }] },
+    { "name": "Book Travel", "short_name": "Travel",  "url": "/travel",       "description": "Flights & hotels with DustMiles",   "icons": [{ "src": "/icons/icon-96.png", "sizes": "96x96" }] },
+    { "name": "Gaming",      "short_name": "Games",   "url": "/gaming",       "description": "Tournaments with real USDC prizes", "icons": [{ "src": "/icons/icon-96.png", "sizes": "96x96" }] },
+    { "name": "DustMiles",   "short_name": "Miles",   "url": "/miles",        "description": "Earn and redeem DustMiles rewards", "icons": [{ "src": "/icons/icon-96.png", "sizes": "96x96" }] }
   ],
-  "related_applications": [],
-  "prefer_related_applications": false,
   "share_target": {
     "action": "/share",
     "method": "POST",
     "enctype": "multipart/form-data",
-    "params": {
-      "title": "title",
-      "text": "text",
-      "url": "url"
-    }
-  }
+    "params": { "title": "title", "text": "text", "url": "url" }
+  },
+  "protocol_handlers": [
+    { "protocol": "web+dustify", "url": "/?dustify=%s" }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "edge_side_panel": { "preferred_width": 400 }
 }

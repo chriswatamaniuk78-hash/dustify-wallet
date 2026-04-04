@@ -84,12 +84,13 @@ export default function LoginPage() {
       setState('success')
       setTimeout(() => router.push(from), 600)
 
-    } catch (err: any) {
+    } catch (err: unknown) {
       setState('error')
-      if (err.name === 'NotAllowedError') {
+      const e = err instanceof Error ? err : new Error('Authentication failed')
+      if (e.name === 'NotAllowedError') {
         setError('Biometric authentication was cancelled or denied.')
       } else {
-        setError(err.message || 'Authentication failed. Please try again.')
+        setError(e.message || 'Authentication failed. Please try again.')
       }
       setTimeout(() => setState('idle'), 500)
     }
