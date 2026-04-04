@@ -15,7 +15,7 @@ import {
   NotificationsAPI, subscribeRealtime, getSessionToken,
 } from './api'
 
-interface FlightsResponse { flights: unknown[]; priceSignal: unknown }
+interface FlightsResponse { flights: unknown[]; priceSignal: string | null }
 
 function pluck<K extends string>(data: unknown, key: K): unknown[] {
   if (data && typeof data === 'object' && key in data) return (data as Record<string, unknown[]>)[key] ?? []

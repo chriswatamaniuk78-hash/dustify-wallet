@@ -80,7 +80,7 @@ function AllocationDonut({ positions }: { positions: Position[] }) {
           <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
             <div style={{ width: 8, height: 8, borderRadius: '50%', background: seg.color, flexShrink: 0 }} />
             <span className="font-mono" style={{ fontSize: 11, color: 'var(--text-secondary)' }}>
-              {positions[i].symbol}
+              {seg.label}
             </span>
             <span className="font-mono" style={{ fontSize: 11, color: 'var(--text-tertiary)', marginLeft: 'auto', minWidth: 36, textAlign: 'right' }}>
               {seg.pct.toFixed(1)}%

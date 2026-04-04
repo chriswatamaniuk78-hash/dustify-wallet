@@ -149,8 +149,10 @@ export interface Notification {
   createdAt: string
 }
 
+export type NavItemId = 'dashboard' | 'trade' | 'travel' | 'gaming' | 'vault'
+
 export interface NavItem {
-  id: string
+  id: NavItemId
   label: string
   href: string
 }
@@ -183,38 +185,44 @@ export function formatWalletAddress(address: string): string {
 // ── Tier System ─────────────────────────────────────────────
 
 export interface TierConfig {
+  tier: string
   label: string
   color: string
   threshold: number
+  multiplier: number
 }
 
-export const TIER_CONFIGS: Record<string, TierConfig> = {
-  PIONEER:  { label: 'Pioneer',  color: '#60a5fa', threshold: 0 },
-  BRONZE:   { label: 'Bronze',   color: '#CD7F32', threshold: 5_000 },
-  SILVER:   { label: 'Silver',   color: '#C0C0C0', threshold: 10_000 },
-  GOLD:     { label: 'Gold',     color: '#D4AF37', threshold: 50_000 },
-  SURGE:    { label: 'Surge',    color: '#EF9F27', threshold: 100_000 },
-  PLATINUM: { label: 'Platinum', color: '#E5E4E2', threshold: 250_000 },
-  OBSIDIAN: { label: 'Obsidian', color: '#1a1a2e', threshold: 500_000 },
-  TITANIUM: { label: 'Titanium', color: '#878681', threshold: 1_000_000 },
-}
+export const TIER_CONFIGS: TierConfig[] = [
+  { tier: 'PIONEER',  label: 'Pioneer',  color: '#60a5fa', threshold: 0,         multiplier: 1.0 },
+  { tier: 'SPARK',    label: 'Spark',    color: '#9CA3AF', threshold: 5_000,     multiplier: 1.2 },
+  { tier: 'FLOW',     label: 'Flow',     color: '#C0C0C0', threshold: 15_000,    multiplier: 1.4 },
+  { tier: 'CURRENT',  label: 'Current',  color: '#D4AF37', threshold: 35_000,    multiplier: 1.6 },
+  { tier: 'SURGE',    label: 'Surge',    color: '#EF9F27', threshold: 75_000,    multiplier: 2.0 },
+  { tier: 'TSUNAMI',  label: 'Tsunami',  color: '#7F77DD', threshold: 150_000,   multiplier: 2.5 },
+  { tier: 'OBSIDIAN', label: 'Obsidian', color: '#1a1a2e', threshold: 500_000,   multiplier: 3.0 },
+  { tier: 'TITANIUM', label: 'Titanium', color: '#878681', threshold: 1_000_000, multiplier: 4.0 },
+]
 
-const TIER_ORDER = Object.values(TIER_CONFIGS)
+const TIER_MAP = TIER_CONFIGS.reduce<Record<string, TierConfig>>((acc, t) => {
+  acc[t.tier] = t
+  return acc
+}, {})
 
 export function getTierConfig(tier: string): TierConfig {
-  return TIER_CONFIGS[tier] ?? TIER_CONFIGS.PIONEER
+  return TIER_MAP[tier] ?? TIER_CONFIGS[0]!
 }
 
-export function getTierProgress(points: number): number {
-  const current = TIER_ORDER.filter(t => points >= t.threshold).pop() ?? TIER_ORDER[0]
-  const next = TIER_ORDER.find(t => t.threshold > points)
+export function getTierProgress(points: number, _currentTier?: string): number {
+  const current = TIER_CONFIGS.filter(t => points >= t.threshold).pop() ?? TIER_CONFIGS[0]
+  if (!current) return 0
+  const next = TIER_CONFIGS.find(t => t.threshold > points)
   if (!next) return 100
   const range = next.threshold - current.threshold
   if (range <= 0) return 100
   return Math.min(100, ((points - current.threshold) / range) * 100)
 }
 
-export function getPointsToNextTier(points: number): number {
-  const next = TIER_ORDER.find(t => t.threshold > points)
+export function getPointsToNextTier(points: number, _currentTier?: string): number {
+  const next = TIER_CONFIGS.find(t => t.threshold > points)
   return next ? next.threshold - points : 0
 }

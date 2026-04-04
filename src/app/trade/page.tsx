@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import ShellLayout from '@/components/shell/ShellLayout'
-import AutonomousTradingBotFull from '@/components/trade/AutonomousTradingBotFull'
+import DustTrade from '@/components/trade/DustTrade'
 
 export const metadata: Metadata = {
   title: 'Trade — Soul Wallet',
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function TradePage() {
   return (
     <ShellLayout>
-      <AutonomousTradingBotFull />
+      <DustTrade />
     </ShellLayout>
   )
 }

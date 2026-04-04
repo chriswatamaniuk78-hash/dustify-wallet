@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import ShellLayout from '@/components/shell/ShellLayout'
-import DustFeeAnalyzer from '@/components/settings/DustFeeAnalyzer'
+import { SettingsPage as SettingsAndMilesPage } from '@/components/settings/SettingsAndMiles'
 
 export const metadata: Metadata = {
   title: 'Fee Structure & Revenue — Soul Wallet',
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function SettingsPage() {
   return (
     <ShellLayout>
-      <DustFeeAnalyzer />
+      <SettingsAndMilesPage />
     </ShellLayout>
   )
 }
