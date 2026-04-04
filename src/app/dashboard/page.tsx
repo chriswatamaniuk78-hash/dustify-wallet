@@ -5,15 +5,6 @@ import StatsRow from '@/components/dashboard/StatsRow'
 import TransactionFeed from '@/components/dashboard/TransactionFeed'
 import BotStatusWidget from '@/components/dashboard/BotStatusWidget'
 import QuickApps from '@/components/dashboard/QuickApps'
-import {
-  DEFAULT_USER,
-  DEFAULT_WALLET,
-  DEFAULT_TRANSACTIONS,
-  DEFAULT_BOT_CONFIG,
-  DEFAULT_BOT_STATS,
-  DEFAULT_POSITIONS,
-
-// Wallet defaults — replaced by real data from API/context in production
 const DEFAULT_USER = { name: 'Sovereign Holder', email: '' }
 const DEFAULT_WALLET = {
   id: 'sw_local',

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 // Public paths that don't require SBT identity
-const PUBLIC_PATHS = ['/onboard', '/mint', '/api', '/_next', '/favicon']
+const PUBLIC_PATHS = ['/onboard', '/mint', '/api', '/_next', '/favicon', '/sw.js', '/manifest.json', '/icons']
 
 export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl
